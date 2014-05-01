@@ -144,3 +144,17 @@ Attributes within the group:
 Note: the output of suggestions is always the name of the product
 
 ![Elasticsearch Suggester Attributes Group](https://dl.dropboxusercontent.com/u/81104563/ed86f232ec8de6f908fa48046bfc9be9-1.png)
+
+## How it compares with default search?
+
+Have you ever noticed searching for 'mens' in default Magento store with sample data returns high hill shoes?
+
+Here are two screenshots, 'mens' search performed with Magento default search and with Elasticserach
+
+### With Magento search
+
+![Magento store results](https://dl.dropboxusercontent.com/u/81104563/Search%20results%20for%20%20%20mens%20%20%20%20Magento%20Commerce%20Demo%20Store.png)
+
+### With Elasticsearch module
+
+![Elasticsearch module results](https://dl.dropboxusercontent.com/u/81104563/Search%20results%20for%20mens%20.png)
