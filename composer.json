@@ -1,0 +1,41 @@
+{
+  "name":"pocketphp/elasticsearch",
+  "type":"magento-module",
+  "description":"Elasticsearch module for Magento",
+  "keywords": ["Magento", "Elasticsearch", "magesearch", "mage", "search"],
+  "license": "MIT",
+  "authors":      [
+        {
+            "name":      "Carlo Tasca",
+            "email":     "carlo.tasca.mail@gmail.com"
+        }
+    ],
+  "require":{
+    "magento-hackathon/magento-composer-installer":"*"
+  },
+  "extra":{
+    "map":[
+      [
+	       "app/code/local/Pocketphp/Elasticsearch", "app/code/local/Pocketphp/Elasticsearch"
+      ],
+      [
+	       "js/elasticsearch", "js/elasticsearch"
+      ],
+      [
+          "app/design/frontend/base/default/layout/pocketphp", "app/design/frontend/base/default/layout/pocketphp"
+      ],
+      [
+	       "app/design/frontend/base/default/template/elasticsearch", "app/design/frontend/base/default/template/elasticsearch"
+      ],
+      [
+	       "app/etc/modules/Pocketphp_Elasticsearch.xml", "app/etc/modules/Pocketphp_Elasticsearch.xml"
+      ],
+      [
+          "app/locale/en_US/Pocketphp_Elasticsearch.csv", "app/locale/en_US/Pocketphp_Elasticsearch.csv"
+      ],
+      [
+          "app/locale/en_GB/Pocketphp_Elasticsearch.csv", "app/locale/en_GB/Pocketphp_Elasticsearch.csv"
+      ]
+    ]	
+  }
+}

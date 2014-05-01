@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade
+ * the Pocketphp Elasticsearch module to newer versions in the future.
+ * If you wish to customize the Pocketphp Elasticsearch module for your needs
+ * please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Pocketphp
+ * @package    Pocketphp_Elasticsearch
+ * @copyright  Copyright (C) 2014 
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pocketphp_Elasticsearch>
+            <version>0.10.0</version>
+        </Pocketphp_Elasticsearch>
+    </modules>
+    <global>
+        <helpers>
+            <elasticsearch>
+                <class>Pocketphp_Elasticsearch_Helper</class>
+            </elasticsearch>
+        </helpers>
+        <models>
+            <elasticsearch>
+                <class>Pocketphp_Elasticsearch_Model</class>
+                <resourceModel>pocketphp_elasticsearch_resource</resourceModel>
+            </elasticsearch>
+            <pocketphp_elasticsearch_resource>
+                <class>Pocketphp_Elasticsearch_Model_Resource</class>
+            </pocketphp_elasticsearch_resource>
+        </models>
+        <resources>
+            <elasticsearch_setup>
+                <setup>
+                    <module>Pocketphp_Elasticsearch</module>
+                    <class>Pocketphp_Elasticsearch_Model_Setup</class>
+                </setup>
+            </elasticsearch_setup>
+        </resources>
+        <blocks>
+            <elasticsearch>
+                <class>Pocketphp_Elasticsearch_Block</class>
+            </elasticsearch>
+            <catalog>
+                <rewrite>
+                    <layer_view>Pocketphp_Elasticsearch_Block_Catalog_Layer</layer_view>
+                </rewrite>
+            </catalog>
+            <catalogsearch>
+                <rewrite>
+                    <layer>Pocketphp_Elasticsearch_Block_Catalogsearch_Layer</layer>
+                </rewrite>
+            </catalogsearch>
+        </blocks>
+        <events>
+            <catalogsearch_index_process_start>
+                <observers>
+                    <elasticsearch_observer>
+                        <class>elasticsearch/event_observer</class>
+                        <method>clearAllIndexes</method>
+                    </elasticsearch_observer>
+                </observers>
+            </catalogsearch_index_process_start>
+        </events>
+    </global>
+    <frontend>
+        <translate>
+            <modules>
+                <Pocketphp_Elasticsearch>
+                    <files>
+                        <default>Pocketphp_Elasticsearch.csv</default>
+                    </files>
+                </Pocketphp_Elasticsearch>
+            </modules>
+        </translate>
+        <routers>
+            <elasticsearch>
+                <use>standard</use>
+                <args>
+                    <module>Pocketphp_Elasticsearch</module>
+                    <frontName>elasticsearch</frontName>
+                </args>
+            </elasticsearch>
+        </routers>
+        <layout>
+            <updates>
+                <elasticsearch module="Pocketphp_Elasticsearch">
+                    <file>pocketphp/elasticsearch.xml</file>
+                </elasticsearch>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Pocketphp_Elasticsearch>
+                    <files>
+                        <default>Pocketphp_Elasticsearch.csv</default>
+                    </files>
+                </Pocketphp_Elasticsearch>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <elasticsearch>
+                                            <title>Pocketphp Elasticsearch</title>
+                                            <sort_order>70</sort_order>
+                                        </elasticsearch>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <events>
+            <catalog_product_delete_after_done>
+                <observers>
+                    <pocketphp_elasticsearch>
+                        <class>elasticsearch/event_observer</class>
+                        <method>setProductDeletedRequiredReindexStatus</method>
+                    </pocketphp_elasticsearch>
+                </observers>
+            </catalog_product_delete_after_done>
+        </events>
+    </adminhtml>
+    <default>
+        <elasticsearch>
+            <core>
+                <host>localhost</host>
+                <port>9200</port>
+            </core>
+            <suggest>
+                <size>10</size>
+                <is_fuzzy_query>1</is_fuzzy_query>
+            </suggest>
+            <mapping>
+                <analyzed_fields><![CDATA[name:standard,description:snowball,short_description:snowball,meta_keyword:standard,sku:standard]]></analyzed_fields>
+            </mapping>
+            <search>
+                <search_query>query_string</search_query>
+                <query_string_lef>0</query_string_lef>
+                <query_string_udm>1</query_string_udm>
+                <fuzzylikethis_tf>0</fuzzylikethis_tf>
+                <fuzzylikethis_mqt>25</fuzzylikethis_mqt>
+                <fuzzylikethis_fuzziness>AUTO</fuzzylikethis_fuzziness>
+                <fuzzylikethis_pl>0</fuzzylikethis_pl>
+                <fuzzylikethis_boost>1.0</fuzzylikethis_boost>
+            </search>
+            <index>
+                <num_shards>10</num_shards>
+                <num_replicas>0</num_replicas>
+            </index>
+            <dev>
+                <log_enabled>0</log_enabled>
+                <log_file>elasticsearch.log</log_file>
+                <error_log_file>elasticsearch_error.log</error_log_file>
+            </dev>
+        </elasticsearch>
+    </default>
+</config>
+

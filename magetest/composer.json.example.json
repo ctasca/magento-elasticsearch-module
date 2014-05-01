@@ -1,0 +1,59 @@
+{
+    "require": {
+        "magento-hackathon/magento-composer-installer":"*",
+        "magento-hackathon/composer-command-integrator": "*"
+    },
+    "require-dev": {
+        "magetest/magento-phpspec-extension": "dev-develop",
+        "magetest/magento-behat-extension": "dev-develop",
+        "phpunit/phpunit": "3.7.*",
+        "phpspec/phpspec": "2.0.0-BETA4",
+        "symfony/dependency-injection": "*",
+        "symfony/config": "*",
+        "behat/mink-selenium-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-sahi-driver": "*",
+        "elasticsearch/elasticsearch": "~1.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:MageTest/prophecy.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/magento-hackathon/magento-composer-installer"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ctasca/MageSpec.git"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "MageTest\\PhpSpec\\MagentoExtension": "vendor/magetest/magento-php-extension/src",
+            "": [
+                "public_html/app/code/community",
+                "public_html/app/code/local",
+                "public_html/app/code/core",
+                "public_html/app",
+                "public_html/lib"
+            ],
+            "Mage": "public_html/app/code/core",
+            "MyMagentoContext" : "src",
+            "MyMagentoAdminContext" : "src"
+        }
+    },
+    "extra":{
+        "magento-root-dir": "./public_html/"
+    }
+}
+

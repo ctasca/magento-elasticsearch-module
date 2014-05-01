@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade
+ * the Pocketphp Elasticsearch module to newer versions in the future.
+ * If you wish to customize the Pocketphp Elasticsearch module for your needs
+ * please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Pocketphp
+ * @package    Pocketphp_Elasticsearch
+ * @copyright  Copyright (C) 2014
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <tabs>
+        <POCKETPHP translate="label">
+            <label>Pocketphp</label>
+            <sort_order>100300</sort_order>
+        </POCKETPHP>
+    </tabs>
+    <sections>
+        <catalog>
+            <groups>
+                <search>
+                    <fields>
+                        <engine translate="label">
+                            <label>Search Engine</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>elasticsearch/adminhtml_system_config_backend_engine</backend_model>
+                            <source_model>elasticsearch/adminhtml_system_config_source_engine</source_model>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </engine>
+                    </fields>
+                </search>
+            </groups>
+        </catalog>
+        <elasticsearch translate="label" module="elasticsearch">
+            <label>Elasticsearch</label>
+            <tab>POCKETPHP</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <core translate="label">
+                    <label>Host Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <host translate="label comment">
+                            <label>Host</label>
+                            <comment><![CDATA[Elasticsearch Host]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </host>
+                        <port translate="label comment">
+                            <label>Port</label>
+                            <comment><![CDATA[Port]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </port>
+                        <additional_hosts translate="label comment">
+                            <label>Additional Hosts</label>
+                            <comment><![CDATA[<strong>Separate each host with a comma.</strong><br />Elasticsearch Additional Hosts.<br />Can be IP + Port, Just IP, Domain + Port, Just Domain<br />Examples: 192.168.1.2:9201, 192.168.1.2, mydomain.server.com:9201, mydomain2.server.com]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </additional_hosts>
+                    </fields>
+                </core>
+                <security translate="label">
+                    <label>Authentication Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>15</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <auth_enabled translate="label comment">
+                            <label>Enable Authentication</label>
+                            <comment><![CDATA[Enables authentication when connecting to elasticsearch server/servers.<br /><strong class="notice">Important:</strong> For this to work Elasticsearch needs to be configured to support authentication.<br />In production, it is advisable to set up a reverse proxy to secure elasticsearch cluster.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </auth_enabled>
+                        <plugin translate="label comment">
+                            <label>Auth Plugin</label>
+                            <comment><![CDATA[The auth plugin to perform authentications.<br /><strong class="notice">Note:</strong> Only listed plugins are supported.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>elasticsearch/source_auth_plugins</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <auth_enabled>1</auth_enabled>
+                            </depends>
+                        </plugin>
+                        <jetty_user translate="label comment">
+                            <label>User</label>
+                            <comment>
+                                <![CDATA[The auth username]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <auth_enabled>1</auth_enabled>
+                                <plugin>jetty</plugin>
+                            </depends>
+                        </jetty_user>
+                        <jetty_password translate="label comment">
+                            <label>Password</label>
+                            <comment><![CDATA[The auth password]]></comment>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <auth_enabled>1</auth_enabled>
+                                <plugin>jetty</plugin>
+                            </depends>
+                        </jetty_password>
+                        <jetty_auth_type translate="label comment">
+                            <label>Authentication Type</label>
+                            <comment><![CDATA[The auth type to use. Accepts four different options: Basic, Digets, NTLM, Any]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>elasticsearch/source_auth_types</source_model>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <auth_enabled>1</auth_enabled>
+                                <plugin>jetty</plugin>
+                            </depends>
+                        </jetty_auth_type>
+                    </fields>
+                </security>
+                <suggest translate="label">
+                    <label>Suggestions Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <size translate="label comment">
+                            <label>Size</label>
+                            <comment><![CDATA[Set search suggestions max size. Default is 10.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </size>
+                        <is_fuzzy_query translate="label comment">
+                            <label>Fuzzy Queries?</label>
+                            <comment><![CDATA[The completion suggester also supports fuzzy queries - this means, customers can actually have a typo in their searches and still get results back.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </is_fuzzy_query>
+                        <fuzziness translate="label comment">
+                            <label>Fuzziness</label>
+                            <comment><![CDATA[Leave blank for default value.<br />Set search suggestions fuzziness. Increase fuzziness to increase suggestions for mispelled terms.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <is_fuzzy_query>1</is_fuzzy_query>
+                            </depends>
+                            <validate>validate-greater-than-zero</validate>
+                        </fuzziness>
+                    </fields>
+                </suggest>
+                <search translate="label">
+                    <label>Search Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <searched_fields translate="label comment">
+                            <label>Searched Fields CSV</label>
+                            <comment><![CDATA[Comma separated list of fields used when performing searches. If left blank '_all' will be used.<br /><strong>It is possible to boost a particular field by adding '^n' to the field name </strong>(where n is a number).<br />For example name^5, desciption^10 will make description more relevant than name.]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </searched_fields>
+                        <search_query translate="label comment">
+                            <label>Search Query</label>
+                            <comment><![CDATA[Search query executed when performing searches. Default is 'Query String']]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>elasticsearch/source_search_queries</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </search_query>
+                        <query_string_lef translate="label comment">
+                            <label>Lowercase Expanded Fields</label>
+                            <comment><![CDATA[Boolean value. Default is 'No'.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>query_string</search_query>
+                            </depends>
+                        </query_string_lef>
+                        <query_string_udm translate="label comment">
+                            <label>Use Dis Max</label>
+                            <comment><![CDATA[Boolean value. Should the queries be combined using dis_max. Default is 'Yes']]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>query_string</search_query>
+                            </depends>
+                        </query_string_udm>
+                        <fuzzylikethis_tf>
+                            <label>Ignore Term Frequency</label>
+                            <comment><![CDATA[Boolean value. Should term frequency be ignored. Defaults to 'No'.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>fuzzylikethis</search_query>
+                            </depends>
+                        </fuzzylikethis_tf>
+                        <fuzzylikethis_mqt>
+                            <label>Max Query Terms</label>
+                            <comment><![CDATA[Integer value. The maximum number of query terms that will be included in any generated query. Defaults to 25.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>fuzzylikethis</search_query>
+                            </depends>
+                            <validate>validate-greater-than-zero</validate>
+                        </fuzzylikethis_mqt>
+                        <fuzzylikethis_fuzziness>
+                            <label>Fuzziness</label>
+                            <comment><![CDATA[The minimum similarity of the term variants. Defaults to AUTO. See <a href="common-options.html#fuzziness" title="Fuzzinessedit">the section called “Fuzziness</a>.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>fuzzylikethis</search_query>
+                            </depends>
+                        </fuzzylikethis_fuzziness>
+                        <fuzzylikethis_pl>
+                            <label>Prefix Length</label>
+                            <comment><![CDATA[Length of required common prefix on variant terms. Defaults to 0.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>fuzzylikethis</search_query>
+                            </depends>
+                            <validate>validate-zero-or-greater</validate>
+                        </fuzzylikethis_pl>
+                        <fuzzylikethis_boost>
+                            <label>Boost</label>
+                            <comment><![CDATA[Sets the boost value of the query. Defaults to 1.0.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>fuzzylikethis</search_query>
+                            </depends>
+                            <validate>validate-greater-than-zero</validate>
+                        </fuzzylikethis_boost>
+                        <fuzzylikethis_analyzer>
+                            <label>Analyzer</label>
+                            <comment><![CDATA[Optional. The analyzer that will be used to analyze the text. Defaults to the analyzer associated with the field.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>28</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <search_query>fuzzylikethis</search_query>
+                            </depends>
+                        </fuzzylikethis_analyzer>
+                    </fields>
+                </search>
+                <mapping translate="label">
+                    <label>Mapping</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <analyzed_fields translate="label comment">
+                            <label>Analyzed Fields CSV</label>
+                            <comment><![CDATA[Comma separated value of fields to be analyzed with corresponding analyzer type. Example:<br /> title:snowball,description:snowball,name:standard.<br />This can also be set on a per-product basis.<br /><strong class="notice">Warning! </strong>Analysing filterable attributes should be avoided. These are automatically set to 'not_analyzed' for correct faceting in layered navigation.]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </analyzed_fields>
+                    </fields>
+                </mapping>
+                <index translate="label">
+                    <label>Index Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <num_shards translate="label comment">
+                            <label>Number of Shards</label>
+                            <comment><![CDATA[Number of shards. Default is 5.<br /><a href="http://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch">What's this?</a>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </num_shards>
+                        <num_replicas translate="label comment">
+                            <label>Number of Replicas</label>
+                            <comment><![CDATA[Number of replicas. Default is 0. <br /><a href="http://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch">What's this?</a>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </num_replicas>
+                    </fields>
+                </index>
+                <dev translate="label">
+                    <label>Developer Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <log_enabled translate="label comment">
+                            <label>Logging Enabled</label>
+                            <comment><![CDATA[<span class="notice">Enable / Disable module logging</span><br /><strong>Note:</strong> For this to work, general Magento logging must be also enabled. See 'Configuration -> Developer' tab.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </log_enabled>
+                        <log_file translate="label comment">
+                            <label>Log File</label>
+                            <comment><![CDATA[Specifies log file]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </log_file>
+                        <error_log_file translate="label comment">
+                            <label>Error Log File</label>
+                            <comment><![CDATA[Specifies error log file]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_log_file>
+                    </fields>
+                </dev>
+            </groups>
+        </elasticsearch>
+    </sections>
+</config>
