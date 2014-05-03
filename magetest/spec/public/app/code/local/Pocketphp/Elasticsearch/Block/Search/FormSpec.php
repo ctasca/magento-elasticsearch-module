@@ -14,13 +14,13 @@ class Pocketphp_Elasticsearch_Block_Search_FormSpec extends ObjectBehavior
 
     function it_returns_the_elasticsearch_search_url()
     {
-        $expected = "http://magebdd.dev/elasticsearch/search/";
+        $expected = \Mage::getBaseUrl() . "elasticsearch/search/";
         $this->getSearchUrl()->shouldReturn($expected);
     }
 
     function it_returns_the_elasticsearch_suggest_url()
     {
-        $expected = "http://magebdd.dev/elasticsearch/suggest/";
+        $expected = \Mage::getBaseUrl() . "elasticsearch/suggest/";
         $this->getSuggestUrl()->shouldReturn($expected);
     }
 }
