@@ -42,7 +42,6 @@ if ($versionHelper->isMageEnterprise() && class_exists("Enterprise_Search_Model_
                 'elasticsearch/engine' => Mage::helper('elasticsearch')
                         ->__('Elasticsearch')
             );
-            $options = array_merge($options, $engines);
 
             foreach ($engines as $k => $v) {
                 $options[] = array(
