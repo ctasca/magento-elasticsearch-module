@@ -94,5 +94,5 @@ Version 0.10.0 alpha
     * added translate CSV files for US and GB
     * changed license fixed comments
 
-Version 1.0.0 beta
------------------------------------------------------------------------------------------------------------------------
+22ede84 (origin/hotfix/ee-duplicate-engine-option, hotfix/ee-duplicate-engine-option) Fix duplicate engine option in Magent EE
+0598e68 (composer/develop) added behat search scenarios for regression tests
