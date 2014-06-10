@@ -51,6 +51,8 @@ class Pocketphp_Elasticsearch_Model_Resource_Index extends Mage_CatalogSearch_Mo
     }
 
     /**
+     *
+     *
      * @param array $index
      * @param       $storeId
      * @param       $productIds
@@ -61,32 +63,33 @@ class Pocketphp_Elasticsearch_Model_Resource_Index extends Mage_CatalogSearch_Mo
         $prefix               = $this->_engine->getFieldsPrefix();
         $prefixedCategoryData = $this->_getCatalogCategoryData($storeId, $productIds);
         $prefixedPriceData    = $this->_getCatalogProductPriceData($productIds);
+        $indexCollector       = new ArrayObject();
 
         $indexIterator = new ArrayIterator($index);
         iterator_apply($indexIterator, array($this, '_advancedIndexCallback'), array(
-            $indexIterator, &$index, $prefix, $prefixedCategoryData, $prefixedPriceData
+            $indexIterator, $indexCollector, $prefix, $prefixedCategoryData, $prefixedPriceData
         ));
 
-        return $index;
+        return $indexCollector->getArrayCopy();
     }
 
     /**
      * @param ArrayIterator $iterator
-     * @param               $index
+     * @param ArrayObject   $collector
      * @param               $prefix
      * @param               $prefixedCategoryData
      * @param               $prefixedPriceData
      */
-    protected function _advancedIndexCallback(ArrayIterator $iterator, $index, $prefix, $prefixedCategoryData, $prefixedPriceData)
+    protected function _advancedIndexCallback(ArrayIterator $iterator, ArrayObject $collector, $prefix, $prefixedCategoryData, $prefixedPriceData)
     {
         while ($iterator->valid()) {
             $productId   = $iterator->key();
             $productData = $iterator->current();
             if (isset($prefixedCategoryData[$productId]) && isset($prefixedPriceData[$productId])) {
                 $categoryData = Mage::helper('elasticsearch')
-                                    ->pregGrepReplaceArrayKeys('/#/', '', $prefixedCategoryData[$productId]);
+                                    ->pregGrepReplaceArrayKeys("/$prefix/", '', $prefixedCategoryData[$productId]);
                 $priceData    = Mage::helper('elasticsearch')
-                                    ->pregGrepReplaceArrayKeys('/#/', '', $prefixedPriceData[$productId]);
+                                    ->pregGrepReplaceArrayKeys("/$prefix/", '', $prefixedPriceData[$productId]);
                 $productData += $categoryData;
                 $productData += $priceData;
             } else {
@@ -96,7 +99,7 @@ class Pocketphp_Elasticsearch_Model_Resource_Index extends Mage_CatalogSearch_Mo
                     'visibility'         => 0
                 );
             }
-            $index[$productId] = $productData;
+            $collector[$productId] = $productData;
             $iterator->next();
         }
     }
