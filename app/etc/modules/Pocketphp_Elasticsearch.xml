@@ -27,7 +27,7 @@
     <modules>
         <Pocketphp_Elasticsearch>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
             <depends>
                 <Mage_Catalog/>
                 <Mage_CatalogSearch/>

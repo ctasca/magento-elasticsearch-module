@@ -25,7 +25,7 @@
 <config>
     <modules>
         <Pocketphp_Elasticsearch>
-            <version>0.10.0</version>
+            <version>0.10.1</version>
         </Pocketphp_Elasticsearch>
     </modules>
     <global>
