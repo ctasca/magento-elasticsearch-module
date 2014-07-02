@@ -16,7 +16,7 @@
   "extra":{
     "map":[
       [
-	       "app/code/local/Pocketphp/Elasticsearch", "app/code/local/Pocketphp/Elasticsearch"
+	       "app/code/community/Pocketphp/Elasticsearch", "app/code/community/Pocketphp/Elasticsearch"
       ],
       [
 	       "js/elasticsearch", "js/elasticsearch"

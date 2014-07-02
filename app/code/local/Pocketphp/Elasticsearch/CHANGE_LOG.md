@@ -95,3 +95,8 @@ Version 0.10.0 alpha
     * changed license fixed comments
     * Fix duplicate engine option in Magent EE
     * Rename CHANGE_LOG to CHANGE_LOG.md
+
+Version 0.10.1 alpha
+-----------------------------------------------------------------------------------------------------------------------
+    * Fix indexing on Magento EE with PHP versions higher than 5.3
+    * changed code pool to 'community'
