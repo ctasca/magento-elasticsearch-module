@@ -100,3 +100,7 @@ Version 0.10.1 alpha
 -----------------------------------------------------------------------------------------------------------------------
     * Fix indexing on Magento EE with PHP versions higher than 5.3
     * changed code pool to 'community'
+
+Version 0.10.2 alpha
+    * Add layout and template for rwd design package (Magento 1.9.0.1)
+    * Add popular search term footer link (replaces default Magento)
