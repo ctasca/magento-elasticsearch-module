@@ -40,6 +40,16 @@ class Pocketphp_Elasticsearch_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
+     * Retrieve search term URL
+     *
+     * @return string
+     */
+    public function getSearchTermUrl()
+    {
+        return $this->_getUrl('elasticsearch/term/popular');
+    }
+
+    /**
      * @return Pocketphp_Elasticsearch_Model_Cluster_Manager
      */
     public function getClusterManager()
