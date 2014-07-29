@@ -26,6 +26,9 @@ For set up instructions read [elasticsearch documentation](http://www.elasticsea
         ],
 </pre>
 
+### Supported Magento Versions
+Elasticsearch module works in latest Magento versions, including 1.9.0.1 with rwd design package.
+
 ### With Package
 
 [Download latest tagged version on Github](https://github.com/ctasca/magento-elasticsearch-module/releases/)
