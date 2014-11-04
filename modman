@@ -1,0 +1,9 @@
+# Elasticsearch module for Magento
+
+app/code/community/Pocketphp/Elasticsearch/               app/code/community/Pocketphp/Elasticsearch/
+js/elasticsearch/                                         js/elasticsearch/
+app/design/frontend/base/default/layout/pocketphp/        app/design/frontend/base/default/layout/pocketphp/
+app/design/frontend/base/default/template/elasticsearch/  app/design/frontend/base/default/template/elasticsearch/
+app/etc/modules/Pocketphp_Elasticsearch.xml               app/etc/modules/Pocketphp_Elasticsearch.xml
+app/locale/en_US/Pocketphp_Elasticsearch.csv              app/locale/en_US/Pocketphp_Elasticsearch.csv
+app/locale/en_GB/Pocketphp_Elasticsearch.csv              app/locale/en_GB/Pocketphp_Elasticsearch.csv
