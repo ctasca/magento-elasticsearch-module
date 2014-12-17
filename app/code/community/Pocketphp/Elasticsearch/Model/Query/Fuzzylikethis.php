@@ -39,14 +39,14 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      *
      * @var bool
      */
-    protected $_ignoreTf;
+    protected $_ignoreTf = null;
 
     /**
      * The maximum number of query terms that will be included in any generated query. Defaults to 25.
      *
      * @var int
      */
-    protected $_maxQueryTerms = 25;
+    protected $_maxQueryTerms = null;
 
     /**
      * The minimum similarity of the term variants. Defaults to 0.5
@@ -57,7 +57,7 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      * @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/common-options.html#fuzziness
      * @var float
      */
-    protected $_fuzziness = 0.5;
+    protected $_fuzziness = null;
 
     /**
      *
@@ -65,21 +65,21 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      *
      * @var int
      */
-    protected $_prefixLength = 0;
+    protected $_prefixLength = null;
 
     /**
      * Sets the boost value of the query. Defaults to 1.0.
      *
      * @var float
      */
-    protected $_boost = 1.0;
+    protected $_boost = null;
 
     /**
      * The analyzer that will be used to analyze the text. Defaults to the analyzer associated with the field.
      *
      * @var string
      */
-    protected $_analyzer = false;
+    protected $_analyzer = null;
 
     /**
      * @param Mage_Core_Model_Store $store
@@ -102,7 +102,7 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      */
     public function getAnalyzer()
     {
-        if (!isset($this->_analyzer))
+        if (null === $this->_analyzer)
             $this->_analyzer = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_analyzer');
 
         return $this->_analyzer;
@@ -121,8 +121,9 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      */
     public function getBoost()
     {
-        if (!isset($this->_analyzer))
-            $this->_analyzer = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_boost');
+        if (null === $this->_boost) {
+            $this->_boost = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_boost');
+        }
 
         return $this->_boost;
     }
@@ -140,8 +141,9 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      */
     public function getFuzziness()
     {
-        if (!isset($this->_fuzziness))
+        if (!isset($this->_fuzziness)) {
             $this->_fuzziness = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_fuzziness');
+        }
 
         return $this->_fuzziness;
     }
@@ -159,8 +161,9 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      */
     public function getIgnoreTf()
     {
-        if (!is_bool($this->_ignoreTf))
-            $this->_ignoreTf = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_tf') > 0 ? true : false;
+        if (null === $this->_ignoreTf) {
+            $this->_ignoreTf = Mage::getStoreConfigFlag('elasticsearch/search/fuzzylikethis_tf');
+        }
 
         return $this->_ignoreTf;
     }
@@ -194,8 +197,9 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      */
     public function getPrefixLength()
     {
-        if (!is_int($this->_prefixLength))
+        if (null === $this->_prefixLength) {
             $this->_prefixLength = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_pl');
+        }
 
         return $this->_prefixLength;
     }
@@ -213,8 +217,9 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
      */
     public function getMaxQueryTerms()
     {
-        if (!is_int($this->_maxQueryTerms))
+        if (null === $this->_maxQueryTerms) {
             $this->_maxQueryTerms = Mage::getStoreConfig('elasticsearch/search/fuzzylikethis_mqt');
+        }
 
         return $this->_maxQueryTerms;
     }
@@ -223,24 +228,39 @@ class Pocketphp_Elasticsearch_Model_Query_Fuzzylikethis extends Pocketphp_Elasti
     {
         $this->_query = array();
 
-        if ($this->_canAddFields())
+        if ($this->_canAddFields()) {
             $this->_query['fuzzy_like_this']['fields'] = $this->_getFields();
-        else
+        } else {
             $this->_query['fuzzy_like_this']['fields'] = array('_all');
+        }
 
-        if ($this->getLikeText())
+        if ($this->getLikeText()) {
             $this->_query['fuzzy_like_this']['like_text'] = $this->getLikeText();
-        else
+        } else {
             $this->_query['fuzzy_like_this']['like_text'] = '';
+        }
 
         $this->_query['fuzzy_like_this']['ignore_tf'] = $this->getIgnoreTf();
-        $this->_query['fuzzy_like_this']['max_query_terms'] = $this->getMaxQueryTerms();
-        $this->_query['fuzzy_like_this']['fuzziness'] = $this->getFuzziness();
-        $this->_query['fuzzy_like_this']['prefix_length'] = $this->getPrefixLength();
-        $this->_query['fuzzy_like_this']['boost'] = $this->getBoost();
+        
+        if ($this->getMaxQueryTerms()) {
+            $this->_query['fuzzy_like_this']['max_query_terms'] = $this->getMaxQueryTerms();
+        }
+        
+        if ($this->getFuzziness()) {
+            $this->_query['fuzzy_like_this']['fuzziness'] = $this->getFuzziness();
+        }
+        
+        if ($this->getPrefixLength()) {
+            $this->_query['fuzzy_like_this']['prefix_length'] = $this->getPrefixLength();
+        }
+        
+        if ($this->getBoost()) {
+            $this->_query['fuzzy_like_this']['boost'] = $this->getBoost();
+        }
 
-        if (!is_bool($this->_analyzer) && strlen($this->getAnalyzer()))
+        if ($this->getAnalyzer()) {
             $this->_query['fuzzy_like_this']['analyzer'] = $this->getAnalyzer();
+        }
 
         return $this->_query;
     }
