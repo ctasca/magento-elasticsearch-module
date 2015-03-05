@@ -13,7 +13,7 @@ Elasticsearch.Magento.prototype = {
     getBaseUrl: function() {
         return this.baseurl;
     }
-}
+};
 
 Elasticsearch.Search = Class.create();
 
