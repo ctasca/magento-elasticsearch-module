@@ -87,4 +87,4 @@ Elasticsearch.Search.prototype = {
         var baseurl = this.store.getBaseUrl();
         top.location.href = baseurl + path;
     }
-}
+};
