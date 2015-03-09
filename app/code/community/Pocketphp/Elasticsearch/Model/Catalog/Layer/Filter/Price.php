@@ -181,9 +181,9 @@ class Pocketphp_Elasticsearch_Model_Catalog_Layer_Filter_Price extends Mage_Cata
                 }
             }
             foreach ($facets['ranges'] as $range) {
-                $from = $range['from'];
-                $to = $range['to'];
-                $count = $range['count'];
+                $from = @$range['from'];
+                $to = @$range['to'];
+                $count = @$range['count'];
 
                 $data[] = array(
                     'label' => $this->_renderRangeLabel($from, $to),
